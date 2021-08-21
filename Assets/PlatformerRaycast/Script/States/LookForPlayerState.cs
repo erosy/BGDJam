@@ -37,7 +37,7 @@ public class LookForPlayerState : State
             amountOfTurnsDone++;
             turnImmidiately = false;
         }
-        else if (Time.time > lastTurnTime + stateData.timeBetweenTurns && !isAllTurnsDone)
+        else if (Time.time >= lastTurnTime + stateData.timeBetweenTurns && !isAllTurnsDone)
         {
             entity.Flip();
             lastTurnTime = Time.time;
