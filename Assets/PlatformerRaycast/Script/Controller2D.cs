@@ -106,7 +106,7 @@ public class Controller2D : RaycastController
                 if (hit.collider.tag == "Trampoline")
                 {
                     collisions.isTouchingTrampoline = true;
-                    Invoke(nameof(ResetTouchingTrampoline), .5f);
+                    Invoke(nameof(ResetTouchingTrampoline), .1f);
                 }
 
                 if(hit.collider.tag == "hitbox")

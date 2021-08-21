@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     [Header("Health Configuration")]
     public int life = 3;
 
-    [Header("Movement Configuration")]
+   
     float maxJumpVelocity;
     float minJumpVelocity;
     float gravity;
@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
     float accelerationTimeGrounded = .1f;
     float timeToWallUnstick;
     float jumpPressedResetDuration = .1f;
+    [Header("Movement Configuration")]
     public float jumpPressedResetTime;
     public float moveSpeed = 5;
     public float maxJumpHeight = 4;
@@ -33,14 +34,14 @@ public class Player : MonoBehaviour
     public float wallSlideToMax = 3f;
     public float wallStickTime = 1f;
     public Vector2 inputDirection;
-    public Vector2 trampolineVelocity;
-    public Vector2 wallJumpClimb;
-    public Vector2 wallJumpOff;
-    public Vector2 wallJumpLeap;
+    //public Vector2 trampolineVelocity;
+    //public Vector2 wallJumpClimb;
+    //public Vector2 wallJumpOff;
+    //public Vector2 wallJumpLeap;
     public bool jumpPressed;
     public bool directionPressed;
-    bool wallSliding;
-    int wallDirX;
+    //bool wallSliding;
+    //int wallDirX;
     Vector2 velocity;
     Controller2D controller2D;
     // Start is called before the first frame update
@@ -58,8 +59,6 @@ public class Player : MonoBehaviour
     {
         //Move the Player
         CalculateMoveVelocity();
-        //WallSliding
-        HandleWallSliding();
         //Jumping
         JumpKeyDown();
         //Counting Teleport Cooldown
@@ -79,7 +78,7 @@ public class Player : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
 
         if (controller2D.collisions.isTouchingTrampoline)
-            velocity.y = /*Vector3.Lerp(trampolineVelocity, Vector3.zero, 10 * Time.deltaTime);*/maxJumpVelocity; 
+            velocity = /*Vector3.Lerp(trampolineVelocity, Vector3.zero, 10 * Time.deltaTime);*/ new Vector2(5f,1.5f * maxJumpVelocity); 
     }
     #endregion
     #region Jump Function(s)
@@ -100,16 +99,7 @@ public class Player : MonoBehaviour
         if (jumpPressed)
         {
             Invoke(nameof(ResetJumpPressed), 0.2f);
-            if (wallSliding)
-            {
-                if (wallDirX == inputDirection.x)
-                    velocity = new Vector2(-wallDirX * wallJumpClimb.x, wallJumpClimb.y);
-                else if (inputDirection.x == 0)
-                    velocity = new Vector2(-wallDirX * wallJumpOff.x, wallJumpOff.y);
-                else
-                    velocity = new Vector2(-wallDirX * wallJumpLeap.x, wallJumpLeap.y);
-            }
-
+           
             if (controller2D.collisions.below)
                 velocity.y += maxJumpVelocity;
         }   
@@ -147,30 +137,5 @@ public class Player : MonoBehaviour
     }
     #endregion
     #endregion
-    #region Wall Slide Function(s)
-    private void HandleWallSliding()
-    {
-        wallSliding = false;
-        wallDirX = (controller2D.collisions.left) ? -1 : 1;
-        if ((controller2D.collisions.left || controller2D.collisions.right) && directionPressed && !controller2D.collisions.below && velocity.y < 0)
-        {
-            wallSliding = true;
-            if (velocity.y < -wallSlideToMax)
-                velocity.y = -wallSlideToMax;
-            if (timeToWallUnstick > 0)
-            {
-                velocity.x = 0;
-                velocityXSmoothing = 0;
-
-                if (inputDirection.x != wallDirX && inputDirection.x != 0)
-                    timeToWallUnstick -= Time.deltaTime;
-                else
-                    timeToWallUnstick = wallStickTime;
-            }
-            else
-                timeToWallUnstick = wallStickTime;
-        }
-
-    }
-    #endregion
+  
 }
