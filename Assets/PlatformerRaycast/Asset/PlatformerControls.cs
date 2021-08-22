@@ -121,7 +121,7 @@ public class @PlatformerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""84b68ab9-23c1-4c86-b395-2b24edf62715"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/x"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
