@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     float jumpPressedResetDuration = .1f;
     [Header("Movement Configuration")]
     public float jumpPressedResetTime;
+    public float trampolineJumpMultiplier;
     public float moveSpeed = 5;
     public float maxJumpHeight = 4;
     public float minJumpHeight = 1;
@@ -78,7 +79,7 @@ public class Player : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
 
         if (controller2D.collisions.isTouchingTrampoline)
-            velocity = /*Vector3.Lerp(trampolineVelocity, Vector3.zero, 10 * Time.deltaTime);*/ new Vector2(5f,1.5f * maxJumpVelocity); 
+            velocity.y = /*Vector3.Lerp(trampolineVelocity, Vector3.zero, 10 * Time.deltaTime);*/ trampolineJumpMultiplier * maxJumpVelocity; 
     }
     #endregion
     #region Jump Function(s)

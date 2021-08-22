@@ -123,7 +123,7 @@ public class Controller2D : RaycastController
 
                         else
                         {
-                            Destroy(this.gameObject);
+                            this.gameObject.SetActive(false);
                         }
                         Invoke(nameof(ResetHitStatus), 2f);
                         continue;
