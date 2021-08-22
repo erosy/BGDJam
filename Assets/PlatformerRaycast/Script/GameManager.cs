@@ -10,11 +10,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Animator loadingScreenAnim;
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private GameObject pausePanel;
+    [SerializeField] private GameObject endScreenPanel;
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 1;
         gameOverPanel.SetActive(false);
         pausePanel.SetActive(false);
+        endScreenPanel.SetActive(false);
         instance = this;
         player = FindObjectOfType<Player>();  
     }
@@ -27,6 +30,13 @@ public class GameManager : MonoBehaviour
     public void GameOverPanel()
     {
         gameOverPanel.SetActive(true);
+    }
+
+    public void EndScreenPanel()
+    {
+        endScreenPanel.SetActive(true);
+        Time.timeScale = 0;
+
     }
     public void PausePanel()
     {

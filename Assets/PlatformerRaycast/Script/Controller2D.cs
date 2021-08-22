@@ -41,6 +41,7 @@ public class Controller2D : RaycastController
                 {
                     if (!collisions.gotHit)
                     {
+                        this.gameObject.SetActive(false);
                         collisions.gotHit = true;
                         GameManager.instance.GameOverPanel();
                         continue;
@@ -53,7 +54,7 @@ public class Controller2D : RaycastController
 
                 if(hit.collider.tag == "finishline")
                 {
-                    GameManager.instance.LoadingGame(SceneManager.GetActiveScene().buildIndex + 1);
+                    GameManager.instance.EndScreenPanel();
                     continue;
                 }
 
@@ -110,6 +111,7 @@ public class Controller2D : RaycastController
                     if (!collisions.gotHit)
                     {
                         collisions.gotHit = true;
+                        this.gameObject.SetActive(false);
                         GameManager.instance.GameOverPanel();
                         continue;
 
@@ -121,7 +123,7 @@ public class Controller2D : RaycastController
 
                 if (hit.collider.tag == "finishline")
                 {
-                    GameManager.instance.LoadingGame(SceneManager.GetActiveScene().buildIndex + 1);
+                    GameManager.instance.EndScreenPanel();
                     continue;
                 }
 
