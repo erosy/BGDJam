@@ -42,6 +42,7 @@ public class Player : MonoBehaviour
     //public Vector2 wallJumpLeap;
     public bool jumpPressed;
     public bool directionPressed;
+    public bool cannotMove;
     //bool wallSliding;
     //int wallDirX;
     Vector2 velocity;
@@ -60,16 +61,20 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Move the Player
-        CalculateMoveVelocity();
-        //Jumping
-        JumpKeyDown();
-        //Counting Teleport Cooldown
-        TeleportCooldown();
-        controller2D.Move(velocity * Time.deltaTime, inputDirection);
+        if (!cannotMove)
+        {
+            //Move the Player
+            CalculateMoveVelocity();
+            //Jumping
+            JumpKeyDown();
+            //Counting Teleport Cooldown
+            TeleportCooldown();
+            controller2D.Move(velocity * Time.deltaTime, inputDirection);
 
-        if (controller2D.collisions.above || controller2D.collisions.below)
-            velocity.y = 0;
+            if (controller2D.collisions.above || controller2D.collisions.below)
+                velocity.y = 0;
+        }
+      
     }
 
     #region Move Function(s)

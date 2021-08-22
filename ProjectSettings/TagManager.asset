@@ -9,6 +9,7 @@ TagManager:
   - hitbox
   - interactable
   - finishline
+  - dialogueTrigger
   layers:
   - Default
   - TransparentFX

@@ -58,8 +58,15 @@ public class Controller2D : RaycastController
                     continue;
                 }
 
+                if (hit.collider.tag == "dialogueTrigger")
+                {
+                    hit.collider.gameObject.GetComponent<DialogueTrigger>().TriggerDialogue();
+                    player.cannotMove = true;
+                    continue;
+                }
 
-                    moveAmount.x = (hit.distance - skinWidth) * directionX;
+
+                moveAmount.x = (hit.distance - skinWidth) * directionX;
                 rayLength = hit.distance;
 
                 collisions.left = directionX == -1;
@@ -124,6 +131,13 @@ public class Controller2D : RaycastController
                 if (hit.collider.tag == "finishline")
                 {
                     GameManager.instance.EndScreenPanel();
+                    continue;
+                }
+
+                if(hit.collider.tag == "dialogueTrigger")
+                {
+                    hit.collider.gameObject.GetComponent<DialogueTrigger>().TriggerDialogue();
+                    player.cannotMove = true;
                     continue;
                 }
 

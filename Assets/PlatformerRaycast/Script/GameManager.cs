@@ -49,6 +49,11 @@ public class GameManager : MonoBehaviour
         pausePanel.SetActive(false);
         Time.timeScale = 1;
     }
+
+    public void Exit()
+    {
+        Application.Quit();
+    }
     public IEnumerator GetSceneLoadProgress(int index)
     {
         loadingScreenAnim.SetTrigger("Load");
