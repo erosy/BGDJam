@@ -16,6 +16,7 @@ public class Door : AbstractInteractables
     // Start is called before the first frame update
     void Start()
     {
+
         foreach (Animator anim in interactableDoor)
             anim.SetBool("open", true);
         foreach (Animator anim in oppositeInteractableDoor)
