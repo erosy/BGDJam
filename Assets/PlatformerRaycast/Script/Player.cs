@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     public Transform spawnTransform;
     [SerializeField] private float cooldownDuration;
     private float timer;
+    private AudioSource audioSource;
 
     [Header("Health Configuration")]
     public int life = 3;
@@ -52,6 +53,7 @@ public class Player : MonoBehaviour
         gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
         maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
         minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
+        audioSource = GetComponent<AudioSource>();
         //print("Gravity: " + gravity + " Jump Velocity: " + jumpVelocity);
     }
 
@@ -107,7 +109,7 @@ public class Player : MonoBehaviour
     }
 
     public void ResetJumpPressed() =>  jumpPressed = false;
-
+    #endregion
     #region Player Abilities
     public void InteractObject()
     {
@@ -137,6 +139,13 @@ public class Player : MonoBehaviour
             timer = 0;
     }
     #endregion
+
+    #region lain-lain
+    public void PlayAudio(AudioClip clip)
+    {
+        audioSource.clip = clip;
+        audioSource.Play();
+    }
     #endregion
-  
+
 }

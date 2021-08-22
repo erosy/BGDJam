@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Door : AbstractInteractables
 {
+    private PlayAudio playAudio;
+    private AudioSource audioSource;
     public bool toogle;
     [SerializeField] private List<Animator> interactableDoor = new List<Animator>();
     [SerializeField] private List<Animator> oppositeInteractableDoor = new List<Animator>();
@@ -11,11 +13,13 @@ public class Door : AbstractInteractables
     {
         toogle = !toogle;
         Debug.Log("DOOR TOOGLE");
+        playAudio.PlaySimpleAudio();
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
 
         foreach (Animator anim in interactableDoor)
             anim.SetBool("open", true);

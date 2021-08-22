@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class Controller2D : RaycastController
@@ -40,25 +41,20 @@ public class Controller2D : RaycastController
                 {
                     if (!collisions.gotHit)
                     {
-
-                        if (player.life != 0)
-                        {
-                            collisions.gotHit = true;
-                            player.life--;
-                            this.transform.position = player.spawnTransform.position;
-                        }
-
-                        else
-                        {
-                            Destroy(this.gameObject);
-                        }
-                        Invoke(nameof(ResetHitStatus), 2f);
+                        collisions.gotHit = true;
+                        GameManager.instance.GameOverPanel();
                         continue;
 
 
                     }
                     else
                         continue;
+                }
+
+                if(hit.collider.tag == "finishline")
+                {
+                    GameManager.instance.LoadingGame(SceneManager.GetActiveScene().buildIndex + 1);
+                    continue;
                 }
 
 
@@ -109,35 +105,25 @@ public class Controller2D : RaycastController
                     Invoke(nameof(ResetTouchingTrampoline), .1f);
                 }
 
-                if(hit.collider.tag == "hitbox")
+                if (hit.collider.tag == "hitbox")
                 {
                     if (!collisions.gotHit)
                     {
-
-                        if (player.life != 0)
-                        {
-                            collisions.gotHit = true;
-                            player.life--;
-                            this.transform.position = player.spawnTransform.position;
-                        }
-
-                        else
-                        {
-                            this.gameObject.SetActive(false);
-                        }
-                        Invoke(nameof(ResetHitStatus), 2f);
+                        collisions.gotHit = true;
+                        GameManager.instance.GameOverPanel();
                         continue;
-                       
-                        
+
+
                     }
                     else
                         continue;
-                  
-
-                   
                 }
-                    
-        
+
+                if (hit.collider.tag == "finishline")
+                {
+                    GameManager.instance.LoadingGame(SceneManager.GetActiveScene().buildIndex + 1);
+                    continue;
+                }
 
                 moveAmount.y = (hit.distance - skinWidth) * directionY;
                 rayLength = hit.distance;
