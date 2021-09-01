@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
     }
     public IEnumerator GetSceneLoadProgress(int index)
     {
+        Time.timeScale = 1;
         loadingScreenAnim.SetTrigger("Load");
         yield return new WaitForSecondsRealtime(1f);
         AsyncOperation operation = SceneManager.LoadSceneAsync(index);

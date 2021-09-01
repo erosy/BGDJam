@@ -45,11 +45,15 @@ public class Player : MonoBehaviour
     public bool cannotMove;
     //bool wallSliding;
     //int wallDirX;
+    public bool flip;
+    public int direction = 1;
     Vector2 velocity;
     Controller2D controller2D;
+    private Animator anim;
     // Start is called before the first frame update
     void Start()
     {
+        anim = GetComponent<Animator>();
         controller2D = GetComponent<Controller2D>();
         gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
         maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
@@ -61,32 +65,61 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!cannotMove)
-        {
+        
             //Move the Player
             CalculateMoveVelocity();
             //Jumping
             JumpKeyDown();
             //Counting Teleport Cooldown
             TeleportCooldown();
+        DoingFlip();
+
+        if (cannotMove)
+            velocity.x = 0;
+
+        
             controller2D.Move(velocity * Time.deltaTime, inputDirection);
 
             if (controller2D.collisions.above || controller2D.collisions.below)
                 velocity.y = 0;
-        }
       
     }
 
     #region Move Function(s)
     private void CalculateMoveVelocity()
     {
+        anim.SetBool("isRun", directionPressed);
+        anim.SetBool("isGround", controller2D.collisions.below);
         directionPressed = (inputDirection != Vector2.zero) ? true : false;
         float targetVelocityX = inputDirection.x * moveSpeed;
         velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller2D.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
         velocity.y += gravity * Time.deltaTime;
 
         if (controller2D.collisions.isTouchingTrampoline)
-            velocity.y = /*Vector3.Lerp(trampolineVelocity, Vector3.zero, 10 * Time.deltaTime);*/ trampolineJumpMultiplier * maxJumpVelocity; 
+            velocity.y = /*Vector3.Lerp(trampolineVelocity, Vector3.zero, 10 * Time.deltaTime);*/ trampolineJumpMultiplier * maxJumpVelocity;
+        if (inputDirection == Vector2.left)
+            direction = -1;
+        else if (inputDirection == Vector2.right)
+            direction = 1;
+    }
+
+    private void DoingFlip()
+    {
+        if ((!flip && direction == -1) || (flip && direction == 1))
+        {
+            flip = !flip;
+
+            if (direction == -1)
+            {
+                transform.localScale = new Vector3(-0.1f, 0.1f, 1);
+            }
+            else if (direction == 1)
+            {
+                transform.localScale = new Vector3(0.1f, 0.1f, 1);
+            }
+        }
+           
+        
     }
     #endregion
     #region Jump Function(s)

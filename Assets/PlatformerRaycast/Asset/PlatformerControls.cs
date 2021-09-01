@@ -49,6 +49,14 @@ public class @PlatformerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""fd877d3d-df4d-4fb3-9646-50f26b6a20f9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -139,6 +147,17 @@ public class @PlatformerControls : IInputActionCollection, IDisposable
                     ""action"": ""Interaction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a35c4bb2-3bb8-4f58-bbd0-a02b58853716"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -151,6 +170,7 @@ public class @PlatformerControls : IInputActionCollection, IDisposable
         m_MainGameplay_Jump = m_MainGameplay.FindAction("Jump", throwIfNotFound: true);
         m_MainGameplay_Teleport = m_MainGameplay.FindAction("Teleport", throwIfNotFound: true);
         m_MainGameplay_Interaction = m_MainGameplay.FindAction("Interaction", throwIfNotFound: true);
+        m_MainGameplay_Pause = m_MainGameplay.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -204,6 +224,7 @@ public class @PlatformerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_MainGameplay_Jump;
     private readonly InputAction m_MainGameplay_Teleport;
     private readonly InputAction m_MainGameplay_Interaction;
+    private readonly InputAction m_MainGameplay_Pause;
     public struct MainGameplayActions
     {
         private @PlatformerControls m_Wrapper;
@@ -212,6 +233,7 @@ public class @PlatformerControls : IInputActionCollection, IDisposable
         public InputAction @Jump => m_Wrapper.m_MainGameplay_Jump;
         public InputAction @Teleport => m_Wrapper.m_MainGameplay_Teleport;
         public InputAction @Interaction => m_Wrapper.m_MainGameplay_Interaction;
+        public InputAction @Pause => m_Wrapper.m_MainGameplay_Pause;
         public InputActionMap Get() { return m_Wrapper.m_MainGameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -233,6 +255,9 @@ public class @PlatformerControls : IInputActionCollection, IDisposable
                 @Interaction.started -= m_Wrapper.m_MainGameplayActionsCallbackInterface.OnInteraction;
                 @Interaction.performed -= m_Wrapper.m_MainGameplayActionsCallbackInterface.OnInteraction;
                 @Interaction.canceled -= m_Wrapper.m_MainGameplayActionsCallbackInterface.OnInteraction;
+                @Pause.started -= m_Wrapper.m_MainGameplayActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_MainGameplayActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_MainGameplayActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_MainGameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -249,6 +274,9 @@ public class @PlatformerControls : IInputActionCollection, IDisposable
                 @Interaction.started += instance.OnInteraction;
                 @Interaction.performed += instance.OnInteraction;
                 @Interaction.canceled += instance.OnInteraction;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -259,5 +287,6 @@ public class @PlatformerControls : IInputActionCollection, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnTeleport(InputAction.CallbackContext context);
         void OnInteraction(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

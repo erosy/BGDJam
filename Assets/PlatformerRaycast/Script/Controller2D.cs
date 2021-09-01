@@ -10,9 +10,11 @@ public class Controller2D : RaycastController
     public CollisionInfo collisions;
     Vector2 playerInput;
     private Player player;
+    Animator anim;
     public override void Start()
     {
         base.Start();
+        anim = GetComponent<Animator>();
         player = GetComponent<Player>();
         collisions.faceDirection = 1;
     }
@@ -41,7 +43,8 @@ public class Controller2D : RaycastController
                 {
                     if (!collisions.gotHit)
                     {
-                        this.gameObject.SetActive(false);
+                        anim.SetBool("isDie", true);
+                        Invoke(nameof(ResetPlayer), 1f);
                         collisions.gotHit = true;
                         GameManager.instance.GameOverPanel();
                         continue;
@@ -117,8 +120,9 @@ public class Controller2D : RaycastController
                 {
                     if (!collisions.gotHit)
                     {
+                        anim.SetBool("isDie", true);
                         collisions.gotHit = true;
-                        this.gameObject.SetActive(false);
+                        Invoke(nameof(ResetPlayer), 1f);
                         GameManager.instance.GameOverPanel();
                         continue;
 
@@ -137,7 +141,7 @@ public class Controller2D : RaycastController
                 if(hit.collider.tag == "dialogueTrigger")
                 {
                     hit.collider.gameObject.GetComponent<DialogueTrigger>().TriggerDialogue();
-                    player.cannotMove = true;
+                   // player.cannotMove = true;
                     continue;
                 }
 
@@ -193,6 +197,8 @@ public class Controller2D : RaycastController
     void ResetFallingThroughPlatform() => collisions.fallingThroughPlatform = false;
     void ResetTouchingTrampoline() => collisions.isTouchingTrampoline = false;
     void ResetHitStatus() => collisions.gotHit = false;
-  
+
+    void ResetPlayer() => this.gameObject.SetActive(false);
+
 
 }

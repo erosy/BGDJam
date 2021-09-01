@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/PlatformerRaycast/Scenes/MainMenu.unity
+    guid: ab3c038f6fc427e4cb67866b48b25ccb
+  - enabled: 1
     path: Assets/PlatformerRaycast/Scenes/Level1.unity
     guid: 7bdecae830e2a1a499cf0d773b79c270
   - enabled: 1
