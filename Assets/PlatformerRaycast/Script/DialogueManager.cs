@@ -40,7 +40,18 @@ public class DialogueManager : MonoBehaviour
         }
 
         string sentence = sentences.Dequeue();
-        text.text = sentence;
+        StopAllCoroutines();
+        StartCoroutine(TypeSentence(sentence));
+    }
+
+    private IEnumerator TypeSentence(string sentence)
+    {
+        text.text = "";
+        foreach(char letter in sentence.ToCharArray())
+        {
+            text.text += letter;
+            yield return null;
+        }
     }
 
     public void EndDialogue(DialogueTrigger trigger)

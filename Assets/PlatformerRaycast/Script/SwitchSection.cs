@@ -10,7 +10,7 @@ public class SwitchSection : MonoBehaviour
     {
         if (collision.CompareTag("Player") /*&& !collision.isTrigger*/)
         {
-            Debug.Log("Masuk");
+            //Debug.Log("Masuk");
             virtualCam.SetActive(true);
         }
     }
@@ -19,7 +19,7 @@ public class SwitchSection : MonoBehaviour
     {
         if (collision.CompareTag("Player") /*&& !collision.isTrigger*/)
         {
-            Debug.Log("Keluar");
+            //Debug.Log("Keluar");
             virtualCam.SetActive(false);
         }
     }

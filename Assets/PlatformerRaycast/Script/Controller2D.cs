@@ -43,8 +43,9 @@ public class Controller2D : RaycastController
                 {
                     if (!collisions.gotHit)
                     {
+
                         anim.SetBool("isDie", true);
-                        Invoke(nameof(ResetPlayer), 1f);
+                        //Invoke(nameof(ResetPlayer), 1f);
                         collisions.gotHit = true;
                         GameManager.instance.GameOverPanel();
                         continue;
@@ -93,7 +94,7 @@ public class Controller2D : RaycastController
 
             if (hit)
             {
-                if (hit.collider.tag == "Through")
+                if (hit.collider.CompareTag("Through"))
                 {
                     if (directionY == 1 || hit.distance == 0)
                         continue;
@@ -110,19 +111,20 @@ public class Controller2D : RaycastController
                         
                 }
 
-                if (hit.collider.tag == "Trampoline")
+                if (hit.collider.CompareTag("Trampoline"))
                 {
                     collisions.isTouchingTrampoline = true;
                     Invoke(nameof(ResetTouchingTrampoline), .1f);
                 }
 
-                if (hit.collider.tag == "hitbox")
+
+                if (hit.collider.CompareTag("hitbox"))
                 {
                     if (!collisions.gotHit)
                     {
-                        anim.SetBool("isDie", true);
+                        player.isDied = true;
                         collisions.gotHit = true;
-                        Invoke(nameof(ResetPlayer), 1f);
+                       // Invoke(nameof(ResetPlayer), 1f);
                         GameManager.instance.GameOverPanel();
                         continue;
 
@@ -130,19 +132,21 @@ public class Controller2D : RaycastController
                     }
                     else
                         continue;
+
                 }
 
-                if (hit.collider.tag == "finishline")
+                if (hit.collider.CompareTag("finishline"))
                 {
                     GameManager.instance.EndScreenPanel();
                     continue;
                 }
 
-                if(hit.collider.tag == "dialogueTrigger")
+                if(hit.collider.CompareTag("dialogueTrigger"))
                 {
                     hit.collider.gameObject.GetComponent<DialogueTrigger>().TriggerDialogue();
-                   // player.cannotMove = true;
+                    player.cannotMove = true;
                     continue;
+
                 }
 
                 moveAmount.y = (hit.distance - skinWidth) * directionY;

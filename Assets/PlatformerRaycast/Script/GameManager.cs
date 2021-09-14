@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadingGame(int index)
     {
+        Time.timeScale = 1f;
         StartCoroutine(GetSceneLoadProgress(index));
     }
 

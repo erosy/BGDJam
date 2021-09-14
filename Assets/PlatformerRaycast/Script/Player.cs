@@ -42,9 +42,10 @@ public class Player : MonoBehaviour
     //public Vector2 wallJumpLeap;
     public bool jumpPressed;
     public bool directionPressed;
+    bool wallSliding;
+    int wallDirX;
     public bool cannotMove;
-    //bool wallSliding;
-    //int wallDirX;
+    public bool isDied;
     public bool flip;
     public int direction = 1;
     Vector2 velocity;
@@ -65,36 +66,46 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (!cannotMove && !isDied)
+        {
             //Move the Player
             CalculateMoveVelocity();
             //Jumping
             JumpKeyDown();
             //Counting Teleport Cooldown
             TeleportCooldown();
-        DoingFlip();
+            DoingFlip();
+
+
+        }
+        else
+        {
+            anim.SetBool("isRun", false);
+            velocity.x = 0;
+        }
+        
+        controller2D.Move(velocity * Time.deltaTime, inputDirection);
+        if (controller2D.collisions.above || controller2D.collisions.below)
+            velocity.y = 0;
+        velocity.y += gravity * Time.deltaTime;
+        directionPressed = (inputDirection != Vector2.zero && !cannotMove) ? true : false;
+        anim.SetBool("isGround", controller2D.collisions.below);
+        anim.SetBool("isDie", isDied);
 
         if (cannotMove)
             velocity.x = 0;
-
-        
-            controller2D.Move(velocity * Time.deltaTime, inputDirection);
-
             if (controller2D.collisions.above || controller2D.collisions.below)
                 velocity.y = 0;
-      
     }
 
     #region Move Function(s)
     private void CalculateMoveVelocity()
     {
         anim.SetBool("isRun", directionPressed);
-        anim.SetBool("isGround", controller2D.collisions.below);
         directionPressed = (inputDirection != Vector2.zero) ? true : false;
         float targetVelocityX = inputDirection.x * moveSpeed;
         velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller2D.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
-        velocity.y += gravity * Time.deltaTime;
-
+       
         if (controller2D.collisions.isTouchingTrampoline)
             velocity.y = /*Vector3.Lerp(trampolineVelocity, Vector3.zero, 10 * Time.deltaTime);*/ trampolineJumpMultiplier * maxJumpVelocity;
         if (inputDirection == Vector2.left)
