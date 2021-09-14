@@ -91,18 +91,13 @@ public class Player : MonoBehaviour
         directionPressed = (inputDirection != Vector2.zero && !cannotMove) ? true : false;
         anim.SetBool("isGround", controller2D.collisions.below);
         anim.SetBool("isDie", isDied);
-
-        if (cannotMove)
-            velocity.x = 0;
-            if (controller2D.collisions.above || controller2D.collisions.below)
-                velocity.y = 0;
     }
 
     #region Move Function(s)
     private void CalculateMoveVelocity()
     {
         anim.SetBool("isRun", directionPressed);
-        directionPressed = (inputDirection != Vector2.zero) ? true : false;
+        directionPressed = (inputDirection.x != 0) ? true : false;
         float targetVelocityX = inputDirection.x * moveSpeed;
         velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller2D.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
        

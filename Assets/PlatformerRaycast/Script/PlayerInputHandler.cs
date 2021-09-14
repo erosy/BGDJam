@@ -23,7 +23,7 @@ public class PlayerInputHandler : MonoBehaviour
             if (!player.cannotMove)
                 player.inputDirection = ctx.ReadValue<Vector2>();
             else
-                player.inputDirection.x = 0;
+                player.inputDirection = Vector2.zero;
         }
     }
 
