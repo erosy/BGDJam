@@ -15,7 +15,7 @@ MonoBehaviour:
   wallCheckDistance: 0.2
   ledgeCheckDistance: 1
   maxAgroDistance: 3
-  minAgroDistance: 4
+  minAgroDistance: 5
   whatIsGround:
     serializedVersion: 2
     m_Bits: 512

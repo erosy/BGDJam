@@ -19,43 +19,53 @@ public class PlayerInputHandler : MonoBehaviour
     public void OnMove(CallbackContext ctx)
     {
         if (ctx.phase == InputActionPhase.Performed)
-<<<<<<< Updated upstream
-            player.inputDirection = ctx.ReadValue<Vector2>();
-=======
         {
             if (!player.cannotMove)
                 player.inputDirection = ctx.ReadValue<Vector2>();
             else
                 player.inputDirection.x = 0;
         }
-
-          
->>>>>>> Stashed changes
     }
 
     public void OnJump(CallbackContext ctx)
     {
-        if (ctx.phase == InputActionPhase.Performed)
-            player.jumpPressed = true;
-        if (ctx.phase == InputActionPhase.Canceled)
-            player.JumpKeyUp();
+        if (!player.cannotMove)
+        {
+            if (ctx.phase == InputActionPhase.Performed)
+                player.jumpPressed = true;
+            if (ctx.phase == InputActionPhase.Canceled)
+                player.JumpKeyUp();
+        }
+       
     }
 
 
     public void OnTeleport(CallbackContext ctx)
     {
         if (ctx.phase == InputActionPhase.Performed)
-           player.Teleport();
+        {
+            if (!player.cannotMove)
+                player.Teleport();
+        }
+           
     }
 
     public void OnInteract(CallbackContext ctx)
     {
-        if (ctx.phase == InputActionPhase.Performed)
-            player.InteractObject();
+      
+            if (ctx.phase == InputActionPhase.Performed)
+        {
+            if (!player.cannotMove)
+                player.InteractObject();
+        }
+           
     }
-    // Update is called once per frame
-    void Update()
+  
+    public void OnPause(CallbackContext ctx)
     {
-        
+        if(ctx.phase == InputActionPhase.Performed)
+        {
+            GameManager.instance.PausePanel();
+        }
     }
 }

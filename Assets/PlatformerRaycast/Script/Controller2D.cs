@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class Controller2D : RaycastController
@@ -9,9 +10,11 @@ public class Controller2D : RaycastController
     public CollisionInfo collisions;
     Vector2 playerInput;
     private Player player;
+    Animator anim;
     public override void Start()
     {
         base.Start();
+        anim = GetComponent<Animator>();
         player = GetComponent<Player>();
         collisions.faceDirection = 1;
     }
@@ -40,26 +43,11 @@ public class Controller2D : RaycastController
                 {
                     if (!collisions.gotHit)
                     {
-<<<<<<< Updated upstream
 
-                        if (player.life != 0)
-                        {
-                            collisions.gotHit = true;
-                            player.life--;
-                            this.transform.position = player.spawnTransform.position;
-                        }
-
-                        else
-                        {
-                            Destroy(this.gameObject);
-                        }
-                        Invoke(nameof(ResetHitStatus), 2f);
-=======
                         anim.SetBool("isDie", true);
                         //Invoke(nameof(ResetPlayer), 1f);
                         collisions.gotHit = true;
                         GameManager.instance.GameOverPanel();
->>>>>>> Stashed changes
                         continue;
 
 
@@ -68,8 +56,21 @@ public class Controller2D : RaycastController
                         continue;
                 }
 
+                if(hit.collider.tag == "finishline")
+                {
+                    GameManager.instance.EndScreenPanel();
+                    continue;
+                }
 
-                    moveAmount.x = (hit.distance - skinWidth) * directionX;
+                if (hit.collider.tag == "dialogueTrigger")
+                {
+                    hit.collider.gameObject.GetComponent<DialogueTrigger>().TriggerDialogue();
+                    player.cannotMove = true;
+                    continue;
+                }
+
+
+                moveAmount.x = (hit.distance - skinWidth) * directionX;
                 rayLength = hit.distance;
 
                 collisions.left = directionX == -1;
@@ -113,15 +114,10 @@ public class Controller2D : RaycastController
                 if (hit.collider.CompareTag("Trampoline"))
                 {
                     collisions.isTouchingTrampoline = true;
-                    Invoke(nameof(ResetTouchingTrampoline), .5f);
+                    Invoke(nameof(ResetTouchingTrampoline), .1f);
                 }
 
-<<<<<<< Updated upstream
-                if(hit.collider.tag == "hitbox")
-                {
-                    if (!collisions.gotHit)
-                    {
-=======
+
                 if (hit.collider.CompareTag("hitbox"))
                 {
                     if (!collisions.gotHit)
@@ -132,31 +128,11 @@ public class Controller2D : RaycastController
                         GameManager.instance.GameOverPanel();
                         continue;
 
->>>>>>> Stashed changes
 
-                        if (player.life != 0)
-                        {
-                            collisions.gotHit = true;
-                            player.life--;
-                            this.transform.position = player.spawnTransform.position;
-                        }
-
-                        else
-                        {
-                            Destroy(this.gameObject);
-                        }
-                        Invoke(nameof(ResetHitStatus), 2f);
-                        continue;
-                       
-                        
                     }
                     else
                         continue;
-<<<<<<< Updated upstream
-                  
 
-                   
-=======
                 }
 
                 if (hit.collider.CompareTag("finishline"))
@@ -170,10 +146,8 @@ public class Controller2D : RaycastController
                     hit.collider.gameObject.GetComponent<DialogueTrigger>().TriggerDialogue();
                     player.cannotMove = true;
                     continue;
->>>>>>> Stashed changes
+
                 }
-                    
-        
 
                 moveAmount.y = (hit.distance - skinWidth) * directionY;
                 rayLength = hit.distance;
@@ -227,6 +201,8 @@ public class Controller2D : RaycastController
     void ResetFallingThroughPlatform() => collisions.fallingThroughPlatform = false;
     void ResetTouchingTrampoline() => collisions.isTouchingTrampoline = false;
     void ResetHitStatus() => collisions.gotHit = false;
-  
+
+    void ResetPlayer() => this.gameObject.SetActive(false);
+
 
 }

@@ -17,8 +17,8 @@ public class ChargeState : State
     public override void Enter()
     {
         base.Enter();
-        entity.SetVelocity(stateData.chargeSpeed);
         isChargeTimeOver = false;
+        entity.SetVelocity(stateData.chargeSpeed);
     }
 
     public override void LogicUpdate()

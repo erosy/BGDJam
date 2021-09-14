@@ -12,11 +12,12 @@ public class Player : MonoBehaviour
     public Transform spawnTransform;
     [SerializeField] private float cooldownDuration;
     private float timer;
+    private AudioSource audioSource;
 
     [Header("Health Configuration")]
     public int life = 3;
 
-    [Header("Movement Configuration")]
+   
     float maxJumpVelocity;
     float minJumpVelocity;
     float gravity;
@@ -25,7 +26,9 @@ public class Player : MonoBehaviour
     float accelerationTimeGrounded = .1f;
     float timeToWallUnstick;
     float jumpPressedResetDuration = .1f;
+    [Header("Movement Configuration")]
     public float jumpPressedResetTime;
+    public float trampolineJumpMultiplier;
     public float moveSpeed = 5;
     public float maxJumpHeight = 4;
     public float minJumpHeight = 1;
@@ -33,52 +36,36 @@ public class Player : MonoBehaviour
     public float wallSlideToMax = 3f;
     public float wallStickTime = 1f;
     public Vector2 inputDirection;
-    public Vector2 trampolineVelocity;
-    public Vector2 wallJumpClimb;
-    public Vector2 wallJumpOff;
-    public Vector2 wallJumpLeap;
+    //public Vector2 trampolineVelocity;
+    //public Vector2 wallJumpClimb;
+    //public Vector2 wallJumpOff;
+    //public Vector2 wallJumpLeap;
     public bool jumpPressed;
     public bool directionPressed;
-<<<<<<< Updated upstream
     bool wallSliding;
     int wallDirX;
-=======
     public bool cannotMove;
     public bool isDied;
-    //bool wallSliding;
-    //int wallDirX;
     public bool flip;
     public int direction = 1;
->>>>>>> Stashed changes
     Vector2 velocity;
     Controller2D controller2D;
+    private Animator anim;
     // Start is called before the first frame update
     void Start()
     {
+        anim = GetComponent<Animator>();
         controller2D = GetComponent<Controller2D>();
         gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
         maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
         minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
+        audioSource = GetComponent<AudioSource>();
         //print("Gravity: " + gravity + " Jump Velocity: " + jumpVelocity);
     }
 
     // Update is called once per frame
     void Update()
     {
-<<<<<<< Updated upstream
-        //Move the Player
-        CalculateMoveVelocity();
-        //WallSliding
-        HandleWallSliding();
-        //Jumping
-        JumpKeyDown();
-        //Counting Teleport Cooldown
-        TeleportCooldown();
-        controller2D.Move(velocity * Time.deltaTime, inputDirection);
-
-        if (controller2D.collisions.above || controller2D.collisions.below)
-            velocity.y = 0;
-=======
         if (!cannotMove && !isDied)
         {
             //Move the Player
@@ -104,24 +91,46 @@ public class Player : MonoBehaviour
         directionPressed = (inputDirection != Vector2.zero && !cannotMove) ? true : false;
         anim.SetBool("isGround", controller2D.collisions.below);
         anim.SetBool("isDie", isDied);
-       
 
->>>>>>> Stashed changes
+        if (cannotMove)
+            velocity.x = 0;
+            if (controller2D.collisions.above || controller2D.collisions.below)
+                velocity.y = 0;
     }
 
     #region Move Function(s)
     private void CalculateMoveVelocity()
     {
-<<<<<<< Updated upstream
-        directionPressed = (inputDirection != Vector2.zero) ? true : false;
-=======
         anim.SetBool("isRun", directionPressed);
->>>>>>> Stashed changes
+        directionPressed = (inputDirection != Vector2.zero) ? true : false;
         float targetVelocityX = inputDirection.x * moveSpeed;
         velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller2D.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
        
         if (controller2D.collisions.isTouchingTrampoline)
-            velocity.y = /*Vector3.Lerp(trampolineVelocity, Vector3.zero, 10 * Time.deltaTime);*/maxJumpVelocity; 
+            velocity.y = /*Vector3.Lerp(trampolineVelocity, Vector3.zero, 10 * Time.deltaTime);*/ trampolineJumpMultiplier * maxJumpVelocity;
+        if (inputDirection == Vector2.left)
+            direction = -1;
+        else if (inputDirection == Vector2.right)
+            direction = 1;
+    }
+
+    private void DoingFlip()
+    {
+        if ((!flip && direction == -1) || (flip && direction == 1))
+        {
+            flip = !flip;
+
+            if (direction == -1)
+            {
+                transform.localScale = new Vector3(-0.1f, 0.1f, 1);
+            }
+            else if (direction == 1)
+            {
+                transform.localScale = new Vector3(0.1f, 0.1f, 1);
+            }
+        }
+           
+        
     }
     #endregion
     #region Jump Function(s)
@@ -142,23 +151,14 @@ public class Player : MonoBehaviour
         if (jumpPressed)
         {
             Invoke(nameof(ResetJumpPressed), 0.2f);
-            if (wallSliding)
-            {
-                if (wallDirX == inputDirection.x)
-                    velocity = new Vector2(-wallDirX * wallJumpClimb.x, wallJumpClimb.y);
-                else if (inputDirection.x == 0)
-                    velocity = new Vector2(-wallDirX * wallJumpOff.x, wallJumpOff.y);
-                else
-                    velocity = new Vector2(-wallDirX * wallJumpLeap.x, wallJumpLeap.y);
-            }
-
+           
             if (controller2D.collisions.below)
                 velocity.y += maxJumpVelocity;
         }   
     }
 
     public void ResetJumpPressed() =>  jumpPressed = false;
-
+    #endregion
     #region Player Abilities
     public void InteractObject()
     {
@@ -188,31 +188,13 @@ public class Player : MonoBehaviour
             timer = 0;
     }
     #endregion
-    #endregion
-    #region Wall Slide Function(s)
-    private void HandleWallSliding()
+
+    #region lain-lain
+    public void PlayAudio(AudioClip clip)
     {
-        wallSliding = false;
-        wallDirX = (controller2D.collisions.left) ? -1 : 1;
-        if ((controller2D.collisions.left || controller2D.collisions.right) && directionPressed && !controller2D.collisions.below && velocity.y < 0)
-        {
-            wallSliding = true;
-            if (velocity.y < -wallSlideToMax)
-                velocity.y = -wallSlideToMax;
-            if (timeToWallUnstick > 0)
-            {
-                velocity.x = 0;
-                velocityXSmoothing = 0;
-
-                if (inputDirection.x != wallDirX && inputDirection.x != 0)
-                    timeToWallUnstick -= Time.deltaTime;
-                else
-                    timeToWallUnstick = wallStickTime;
-            }
-            else
-                timeToWallUnstick = wallStickTime;
-        }
-
+        audioSource.clip = clip;
+        audioSource.Play();
     }
     #endregion
+
 }
