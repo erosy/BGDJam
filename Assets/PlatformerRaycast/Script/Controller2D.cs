@@ -40,6 +40,7 @@ public class Controller2D : RaycastController
                 {
                     if (!collisions.gotHit)
                     {
+<<<<<<< Updated upstream
 
                         if (player.life != 0)
                         {
@@ -53,6 +54,12 @@ public class Controller2D : RaycastController
                             Destroy(this.gameObject);
                         }
                         Invoke(nameof(ResetHitStatus), 2f);
+=======
+                        anim.SetBool("isDie", true);
+                        //Invoke(nameof(ResetPlayer), 1f);
+                        collisions.gotHit = true;
+                        GameManager.instance.GameOverPanel();
+>>>>>>> Stashed changes
                         continue;
 
 
@@ -86,7 +93,7 @@ public class Controller2D : RaycastController
 
             if (hit)
             {
-                if (hit.collider.tag == "Through")
+                if (hit.collider.CompareTag("Through"))
                 {
                     if (directionY == 1 || hit.distance == 0)
                         continue;
@@ -103,16 +110,29 @@ public class Controller2D : RaycastController
                         
                 }
 
-                if (hit.collider.tag == "Trampoline")
+                if (hit.collider.CompareTag("Trampoline"))
                 {
                     collisions.isTouchingTrampoline = true;
                     Invoke(nameof(ResetTouchingTrampoline), .5f);
                 }
 
+<<<<<<< Updated upstream
                 if(hit.collider.tag == "hitbox")
                 {
                     if (!collisions.gotHit)
                     {
+=======
+                if (hit.collider.CompareTag("hitbox"))
+                {
+                    if (!collisions.gotHit)
+                    {
+                        player.isDied = true;
+                        collisions.gotHit = true;
+                       // Invoke(nameof(ResetPlayer), 1f);
+                        GameManager.instance.GameOverPanel();
+                        continue;
+
+>>>>>>> Stashed changes
 
                         if (player.life != 0)
                         {
@@ -132,9 +152,25 @@ public class Controller2D : RaycastController
                     }
                     else
                         continue;
+<<<<<<< Updated upstream
                   
 
                    
+=======
+                }
+
+                if (hit.collider.CompareTag("finishline"))
+                {
+                    GameManager.instance.EndScreenPanel();
+                    continue;
+                }
+
+                if(hit.collider.CompareTag("dialogueTrigger"))
+                {
+                    hit.collider.gameObject.GetComponent<DialogueTrigger>().TriggerDialogue();
+                    player.cannotMove = true;
+                    continue;
+>>>>>>> Stashed changes
                 }
                     
         

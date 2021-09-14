@@ -19,7 +19,18 @@ public class PlayerInputHandler : MonoBehaviour
     public void OnMove(CallbackContext ctx)
     {
         if (ctx.phase == InputActionPhase.Performed)
+<<<<<<< Updated upstream
             player.inputDirection = ctx.ReadValue<Vector2>();
+=======
+        {
+            if (!player.cannotMove)
+                player.inputDirection = ctx.ReadValue<Vector2>();
+            else
+                player.inputDirection.x = 0;
+        }
+
+          
+>>>>>>> Stashed changes
     }
 
     public void OnJump(CallbackContext ctx)

@@ -39,8 +39,17 @@ public class Player : MonoBehaviour
     public Vector2 wallJumpLeap;
     public bool jumpPressed;
     public bool directionPressed;
+<<<<<<< Updated upstream
     bool wallSliding;
     int wallDirX;
+=======
+    public bool cannotMove;
+    public bool isDied;
+    //bool wallSliding;
+    //int wallDirX;
+    public bool flip;
+    public int direction = 1;
+>>>>>>> Stashed changes
     Vector2 velocity;
     Controller2D controller2D;
     // Start is called before the first frame update
@@ -56,6 +65,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+<<<<<<< Updated upstream
         //Move the Player
         CalculateMoveVelocity();
         //WallSliding
@@ -68,16 +78,48 @@ public class Player : MonoBehaviour
 
         if (controller2D.collisions.above || controller2D.collisions.below)
             velocity.y = 0;
+=======
+        if (!cannotMove && !isDied)
+        {
+            //Move the Player
+            CalculateMoveVelocity();
+            //Jumping
+            JumpKeyDown();
+            //Counting Teleport Cooldown
+            TeleportCooldown();
+            DoingFlip();
+
+
+        }
+        else
+        {
+            anim.SetBool("isRun", false);
+            velocity.x = 0;
+        }
+        
+        controller2D.Move(velocity * Time.deltaTime, inputDirection);
+        if (controller2D.collisions.above || controller2D.collisions.below)
+            velocity.y = 0;
+        velocity.y += gravity * Time.deltaTime;
+        directionPressed = (inputDirection != Vector2.zero && !cannotMove) ? true : false;
+        anim.SetBool("isGround", controller2D.collisions.below);
+        anim.SetBool("isDie", isDied);
+       
+
+>>>>>>> Stashed changes
     }
 
     #region Move Function(s)
     private void CalculateMoveVelocity()
     {
+<<<<<<< Updated upstream
         directionPressed = (inputDirection != Vector2.zero) ? true : false;
+=======
+        anim.SetBool("isRun", directionPressed);
+>>>>>>> Stashed changes
         float targetVelocityX = inputDirection.x * moveSpeed;
         velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller2D.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
-        velocity.y += gravity * Time.deltaTime;
-
+       
         if (controller2D.collisions.isTouchingTrampoline)
             velocity.y = /*Vector3.Lerp(trampolineVelocity, Vector3.zero, 10 * Time.deltaTime);*/maxJumpVelocity; 
     }
