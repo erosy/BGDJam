@@ -6,7 +6,7 @@ using UnityEngine;
 public class RaycastController : MonoBehaviour
 {
     protected const float skinWidth = .015f;
-    protected const float distanceBetweenRays = .25f;
+    protected const float distanceBetweenRays = .1f;
     protected int horizontalRayCount;
     protected int verticalRayCount;
 

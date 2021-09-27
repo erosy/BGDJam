@@ -82,7 +82,7 @@ public class PlatformController : RaycastController
         foreach (PassengerMovement passenger in passengerMovements)
         {
             if (!passengerDicitionary.ContainsKey(passenger.transform))
-                passengerDicitionary.Add(passenger.transform, passenger.transform.GetComponent<Controller2D>());
+                passengerDicitionary.Add(passenger.transform, passenger.transform.GetComponent<Controller2D>()); // cara ngakalin supaya ga manggil getcomponent controller 2d tiap frame, yang bisa makan performa.
             if (passenger.moveBeforePlatform == beforeMovePlatform)
                 passengerDicitionary[passenger.transform].Move(passenger.velocity, passenger.standingOnPlatform);
         }
@@ -109,10 +109,14 @@ public class PlatformController : RaycastController
 
                 if (hit)
                 {
-                    if (!movedPassengers.Contains(hit.transform))
+                    if (!movedPassengers.Contains(hit.transform) /* detect posisi player */)
                     {
-                        movedPassengers.Add(hit.transform);
-                        float pushX = (directionY == 1) ? velocity.x : 0;
+                        movedPassengers.Add(hit.transform); /* Posisi player dimasukkan ke list sebagai bagian dari platform supaya player dapat bergerak sesuai arah platform */
+                        float pushX = (directionY == 1) ? velocity.x : 0; //velocity x yang digunakan untuk menggerakkan player horizontally, berpengaruh jika platformnya ada bergerak secara diagonal.
+                        /* karena bergerak secara vertical maka velocity x yg diberikan sebagai berikut: 
+                            Player baru mengikuti velocity x dari platform jika player berada di atas platform.
+                            Selain itu player tidak mengikuti velocity x dari platform.
+                         */
                         float pushY = velocity.y - (hit.distance - skinWidth) * directionY;
 
                         passengerMovements.Add(new PassengerMovement(hit.transform, new Vector2(pushX, pushY), directionY == 1, true));
@@ -137,7 +141,7 @@ public class PlatformController : RaycastController
                     if (!movedPassengers.Contains(hit.transform))
                     {
                         movedPassengers.Add(hit.transform);
-                        float pushX = velocity.x - (hit.distance - skinWidth) * directionX;
+                        float pushX = velocity.x - (hit.distance - skinWidth) * directionX; //jika player berada disamping platform, maka player akan bergeser searah platform yang berjalan
                         float pushY = -skinWidth;
 
                         passengerMovements.Add(new PassengerMovement(hit.transform, new Vector2(pushX, pushY), false, true));

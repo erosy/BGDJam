@@ -69,7 +69,6 @@ public class Controller2D : RaycastController
                     continue;
                 }
 
-
                 moveAmount.x = (hit.distance - skinWidth) * directionX;
                 rayLength = hit.distance;
 
@@ -149,12 +148,14 @@ public class Controller2D : RaycastController
 
                 }
 
+
                 moveAmount.y = (hit.distance - skinWidth) * directionY;
                 rayLength = hit.distance;
 
                 collisions.below = directionY == -1;
                 collisions.above = directionY == 1;
             }
+
 
         }
     }
@@ -191,7 +192,7 @@ public class Controller2D : RaycastController
         }
         //Calculate collisions horizontal first sebelum vertical karena ntr ganggu
         HorizontalCollisions(ref moveAmount);
-        if (moveAmount.y != 0)
+        if (moveAmount.y != 0 )
             VerticalCollisions(ref moveAmount);      
         transform.Translate(moveAmount);
         if (standingOnPlatform)
