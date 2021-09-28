@@ -10,6 +10,8 @@ TagManager:
   - interactable
   - finishline
   - dialogueTrigger
+  - interactableTrigger
+  - Ladder
   layers:
   - Default
   - TransparentFX

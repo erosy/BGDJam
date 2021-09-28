@@ -40,15 +40,17 @@ public class Player : MonoBehaviour
     //public Vector2 wallJumpClimb;
     //public Vector2 wallJumpOff;
     //public Vector2 wallJumpLeap;
+    public bool isClimbing;
     public bool jumpPressed;
-    public bool directionPressed;
+    public bool directionPressedX;
+    public bool directionPressedY;
     bool wallSliding;
     int wallDirX;
     public bool cannotMove;
     public bool isDied;
     public bool flip;
     public int direction = 1;
-    Vector2 velocity;
+    public Vector2 velocity;
     Controller2D controller2D;
     private Animator anim;
     // Start is called before the first frame update
@@ -88,7 +90,6 @@ public class Player : MonoBehaviour
         if (controller2D.collisions.above || controller2D.collisions.below)
             velocity.y = 0;
         velocity.y += gravity * Time.deltaTime;
-        directionPressed = (inputDirection != Vector2.zero && !cannotMove) ? true : false;
         anim.SetBool("isGround", controller2D.collisions.below);
         anim.SetBool("isDie", isDied);
     }
@@ -96,11 +97,22 @@ public class Player : MonoBehaviour
     #region Move Function(s)
     private void CalculateMoveVelocity()
     {
-        anim.SetBool("isRun", directionPressed);
-        directionPressed = (inputDirection.x != 0) ? true : false;
+        directionPressedX = (inputDirection.x != 0 && inputDirection.y == 0) ? true : false;
+        directionPressedY = (inputDirection.y != 0) ? true : false;
+        anim.SetBool("isRun", directionPressedX);
+        //anim.SetBool("isClimbing", isClimbing);
         float targetVelocityX = inputDirection.x * moveSpeed;
-        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller2D.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
-       
+        if (!isClimbing)
+            velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller2D.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
+        else
+        {
+            if (inputDirection.y < 0 && controller2D.collisions.below)
+                isClimbing = false;
+            velocity.y = inputDirection.y * moveSpeed;
+            velocity.x = 0;
+        }
+         
+
         if (controller2D.collisions.isTouchingTrampoline)
             velocity.y = /*Vector3.Lerp(trampolineVelocity, Vector3.zero, 10 * Time.deltaTime);*/ trampolineJumpMultiplier * maxJumpVelocity;
         if (inputDirection == Vector2.left)
@@ -117,11 +129,11 @@ public class Player : MonoBehaviour
 
             if (direction == -1)
             {
-                transform.localScale = new Vector3(-0.1f, 0.1f, 1);
+                transform.localScale = new Vector3(-transform.localScale.x,transform.localScale.y, 1);
             }
             else if (direction == 1)
             {
-                transform.localScale = new Vector3(0.1f, 0.1f, 1);
+                transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, 1);
             }
         }
            
@@ -158,8 +170,26 @@ public class Player : MonoBehaviour
     public void InteractObject()
     {
         if (isInteractable && interactableObject != null)
-            interactableObject.GetComponent<AbstractInteractables>().Interactables();
+        {
+            //if (isClimbing && interactableObject.name == "Ladder")
+            //{
+            //    interactableObject.GetComponent<Ladder>().UnInteract();
+            //    if (!controller2D.collisions.below)
+            //        velocity.y = 0.5f * maxJumpVelocity;
+            //}
+            //else 
+                interactableObject.GetComponent<InteractableObject>().Interact();
 
+        }
+            
+        
+    }
+
+    public void SetTeleportPosition()
+    {
+        if (interactableObject != null)
+            portalTransform = interactableObject.transform;
+        Debug.Log("PORTAL ACTIVATED");
     }
 
     public void Teleport()
