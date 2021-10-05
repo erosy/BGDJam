@@ -12,6 +12,7 @@ TagManager:
   - dialogueTrigger
   - interactableTrigger
   - Ladder
+  - CameraTrigger
   layers:
   - Default
   - TransparentFX
