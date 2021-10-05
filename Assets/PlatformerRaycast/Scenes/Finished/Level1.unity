@@ -2074,6 +2074,50 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1313769028}
     m_Modifications:
+    - target: {fileID: 2912270482008771, guid: 96dd4858c4e669240ac73ee77dae2e0d, type: 3}
+      propertyPath: onInteract.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2912270482008771, guid: 96dd4858c4e669240ac73ee77dae2e0d, type: 3}
+      propertyPath: onInteract.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2912270482008771, guid: 96dd4858c4e669240ac73ee77dae2e0d, type: 3}
+      propertyPath: onInteract.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2912270482008771, guid: 96dd4858c4e669240ac73ee77dae2e0d, type: 3}
+      propertyPath: onInteract.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1927947455}
+    - target: {fileID: 2912270482008771, guid: 96dd4858c4e669240ac73ee77dae2e0d, type: 3}
+      propertyPath: onInteract.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 1623142729}
+    - target: {fileID: 2912270482008771, guid: 96dd4858c4e669240ac73ee77dae2e0d, type: 3}
+      propertyPath: onInteract.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2912270482008771, guid: 96dd4858c4e669240ac73ee77dae2e0d, type: 3}
+      propertyPath: onInteract.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2912270482008771, guid: 96dd4858c4e669240ac73ee77dae2e0d, type: 3}
+      propertyPath: onInteract.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ToogleDoor
+      objectReference: {fileID: 0}
+    - target: {fileID: 2912270482008771, guid: 96dd4858c4e669240ac73ee77dae2e0d, type: 3}
+      propertyPath: onInteract.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: ToogleDoor
+      objectReference: {fileID: 0}
+    - target: {fileID: 2912270482008771, guid: 96dd4858c4e669240ac73ee77dae2e0d, type: 3}
+      propertyPath: onInteract.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2912270482008771, guid: 96dd4858c4e669240ac73ee77dae2e0d, type: 3}
+      propertyPath: onInteract.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6419335733768150275, guid: 96dd4858c4e669240ac73ee77dae2e0d,
         type: 3}
       propertyPath: m_Name
@@ -2301,6 +2345,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 447367234}
     m_Modifications:
+    - target: {fileID: 5233920732682253611, guid: 9c774655576b4c04ebcf58c1bb5713ae,
+        type: 3}
+      propertyPath: doorOpen
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8878313705438667650, guid: 9c774655576b4c04ebcf58c1bb5713ae,
         type: 3}
       propertyPath: m_RootOrder
@@ -2547,6 +2596,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &617710534 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5233920732682253611, guid: 9c774655576b4c04ebcf58c1bb5713ae,
+    type: 3}
+  m_PrefabInstance: {fileID: 1853166040}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1cc58cb40c60674f875616b1b57d0ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &686704368
 GameObject:
   m_ObjectHideFlags: 0
@@ -3229,6 +3290,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 447367234}
     m_Modifications:
+    - target: {fileID: 5233920732682253611, guid: 9c774655576b4c04ebcf58c1bb5713ae,
+        type: 3}
+      propertyPath: doorOpen
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8878313705438667650, guid: 9c774655576b4c04ebcf58c1bb5713ae,
         type: 3}
       propertyPath: m_RootOrder
@@ -3304,6 +3370,50 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1313769028}
     m_Modifications:
+    - target: {fileID: 2912270482008771, guid: 96dd4858c4e669240ac73ee77dae2e0d, type: 3}
+      propertyPath: onInteract.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2912270482008771, guid: 96dd4858c4e669240ac73ee77dae2e0d, type: 3}
+      propertyPath: onInteract.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2912270482008771, guid: 96dd4858c4e669240ac73ee77dae2e0d, type: 3}
+      propertyPath: onInteract.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2912270482008771, guid: 96dd4858c4e669240ac73ee77dae2e0d, type: 3}
+      propertyPath: onInteract.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1192358050}
+    - target: {fileID: 2912270482008771, guid: 96dd4858c4e669240ac73ee77dae2e0d, type: 3}
+      propertyPath: onInteract.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 617710534}
+    - target: {fileID: 2912270482008771, guid: 96dd4858c4e669240ac73ee77dae2e0d, type: 3}
+      propertyPath: onInteract.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2912270482008771, guid: 96dd4858c4e669240ac73ee77dae2e0d, type: 3}
+      propertyPath: onInteract.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2912270482008771, guid: 96dd4858c4e669240ac73ee77dae2e0d, type: 3}
+      propertyPath: onInteract.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ToogleDoor
+      objectReference: {fileID: 0}
+    - target: {fileID: 2912270482008771, guid: 96dd4858c4e669240ac73ee77dae2e0d, type: 3}
+      propertyPath: onInteract.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: ToogleDoor
+      objectReference: {fileID: 0}
+    - target: {fileID: 2912270482008771, guid: 96dd4858c4e669240ac73ee77dae2e0d, type: 3}
+      propertyPath: onInteract.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2912270482008771, guid: 96dd4858c4e669240ac73ee77dae2e0d, type: 3}
+      propertyPath: onInteract.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6419335733768150275, guid: 96dd4858c4e669240ac73ee77dae2e0d,
         type: 3}
       propertyPath: m_Name
@@ -15085,6 +15195,18 @@ Transform:
   m_Father: {fileID: 1566468565}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1192358050 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5233920732682253611, guid: 9c774655576b4c04ebcf58c1bb5713ae,
+    type: 3}
+  m_PrefabInstance: {fileID: 837530247}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1cc58cb40c60674f875616b1b57d0ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1289479334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15884,7 +16006,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1462581376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16812,6 +16934,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 75101628}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1623142729 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5233920732682253611, guid: 9c774655576b4c04ebcf58c1bb5713ae,
+    type: 3}
+  m_PrefabInstance: {fileID: 942458244}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1cc58cb40c60674f875616b1b57d0ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1654793366
 GameObject:
   m_ObjectHideFlags: 0
@@ -18277,6 +18411,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1927947455 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5233920732682253611, guid: 9c774655576b4c04ebcf58c1bb5713ae,
+    type: 3}
+  m_PrefabInstance: {fileID: 580964554}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1cc58cb40c60674f875616b1b57d0ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2006777793
 GameObject:
   m_ObjectHideFlags: 3
