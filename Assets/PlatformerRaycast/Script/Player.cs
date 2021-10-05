@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     [Header("Interaction Configuration")]
     public bool isInteractable = false;
     public GameObject interactableObject;
+    public Transform objectToBeTeleported;
     public Transform portalTransform;
     public Transform spawnTransform;
     [SerializeField] private float cooldownDuration;
@@ -62,6 +63,7 @@ public class Player : MonoBehaviour
         maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
         minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
         audioSource = GetComponent<AudioSource>();
+        objectToBeTeleported = this.gameObject.transform;
         //print("Gravity: " + gravity + " Jump Velocity: " + jumpVelocity);
     }
 
@@ -185,6 +187,18 @@ public class Player : MonoBehaviour
         
     }
 
+    public void SetObjectToBeTeleported()
+    {
+        if (interactableObject != null && isInteractable)
+            objectToBeTeleported = interactableObject.transform;
+    }
+
+    public void ResetObjectToBeTeleported()
+    {
+        if (interactableObject != null && isInteractable)
+            objectToBeTeleported = this.transform;
+    }
+
     public void SetTeleportPosition()
     {
         if (interactableObject != null)
@@ -196,7 +210,7 @@ public class Player : MonoBehaviour
     {
         if(portalTransform != null && timer == 0)
         {
-            this.transform.position = portalTransform.transform.position;
+            objectToBeTeleported.position = portalTransform.transform.position;
             timer = cooldownDuration;
         }
         else
