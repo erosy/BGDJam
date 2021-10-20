@@ -187,6 +187,19 @@ public class Player : MonoBehaviour
         
     }
 
+    public void KillPlayer()
+    {
+        isDied = true;
+        controller2D.collisions.gotHit = true;
+                // Invoke(nameof(ResetPlayer), 1f);
+        GameManager.instance.GameOverPanel();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("hitbox"))
+            KillPlayer();
+    }
     public void SetObjectToBeTeleported()
     {
         if (interactableObject != null && isInteractable)

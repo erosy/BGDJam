@@ -45,7 +45,16 @@ public class Entity : MonoBehaviour
 
     public virtual bool WallDetected()
     {
-        return Physics2D.Raycast(wallCheck.position, aliveGO.transform.right, entityData.wallCheckDistance, entityData.whatIsGround);
+        var detectingWall = Physics2D.Raycast(wallCheck.position, aliveGO.transform.right, entityData.wallCheckDistance, entityData.whatIsGround);
+        if (detectingWall)
+        {
+            if (detectingWall.collider.CompareTag("hitbox"))
+                return false;
+            else
+                return
+                    true;
+        }
+        return false;
     }
     public virtual bool LedgeDetected()
     {
@@ -55,12 +64,30 @@ public class Entity : MonoBehaviour
 
     public virtual bool CheckPlayerInMinAgroRange()
     {
-        return Physics2D.Raycast(playerCheck.position, aliveGO.transform.right, entityData.minAgroDistance, entityData.whatIsPlayer);
+        var detectingPlayer = Physics2D.Raycast(playerCheck.position, aliveGO.transform.right, entityData.minAgroDistance, entityData.whatIsPlayer);
+        if (detectingPlayer)
+        {
+            var player = detectingPlayer.collider.GetComponent<Player>();
+            if (player.isDied)
+                return false;
+            else
+                return true;
+        }
+        return false;
     }
 
     public virtual bool CheckPlayerInMaxAgroRange()
     {
-        return Physics2D.Raycast(playerCheck.position, aliveGO.transform.right, entityData.maxAgroDistance, entityData.whatIsPlayer);
+       var detectingPlayer = Physics2D.Raycast(playerCheck.position, aliveGO.transform.right, entityData.maxAgroDistance, entityData.whatIsPlayer);
+        if (detectingPlayer)
+        {
+            var player = detectingPlayer.collider.GetComponent<Player>();
+            if (player.isDied)
+                return false;
+            else
+                return true;
+        }
+        return false;
     }
 
 

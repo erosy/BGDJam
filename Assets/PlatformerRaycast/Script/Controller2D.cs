@@ -117,23 +117,6 @@ public class Controller2D : RaycastController
                 }
 
 
-                if (hit.collider.CompareTag("hitbox"))
-                {
-                    if (!collisions.gotHit)
-                    {
-                        player.isDied = true;
-                        collisions.gotHit = true;
-                       // Invoke(nameof(ResetPlayer), 1f);
-                        GameManager.instance.GameOverPanel();
-                        continue;
-
-
-                    }
-                    else
-                        continue;
-
-                }
-
                 if (hit.collider.CompareTag("finishline"))
                 {
                     GameManager.instance.EndScreenPanel();
