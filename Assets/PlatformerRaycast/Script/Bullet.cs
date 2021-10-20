@@ -7,6 +7,8 @@ public class Bullet : MonoBehaviour
     public float speed;
     //private float direction;
     public float bulletDuration;
+    [HideInInspector]public Vector2 shootingDirection;
+    [SerializeField] private GameObject bulletSprite;
     private float bulletTimer;
     private Rigidbody2D rb;
 
@@ -14,7 +16,7 @@ public class Bullet : MonoBehaviour
     {
         bulletTimer = bulletDuration;
         rb = GetComponent<Rigidbody2D>();
-        rb.velocity = Vector2.left /* direction*/ * speed;
+        rb.velocity = shootingDirection * speed;
     }
     // Start is called before the first frame update
     void Start()
@@ -25,7 +27,10 @@ public class Bullet : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.velocity = Vector2.left /* direction*/ * speed;
+        rb.velocity = shootingDirection  /* direction*/ * speed;
+        Vector2 velocity = rb.velocity;
+        var angle = Mathf.Atan2(velocity.x, velocity.y) * Mathf.Rad2Deg;
+        bulletSprite.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
     // Update is called once per frame
@@ -39,7 +44,10 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+       // Debug.Log(collision.name);
         if (!collision.CompareTag("CameraTrigger"))
             bulletTimer = 0;
+        //if (collision.CompareTag("Player"))
+        //    collision.gameObject.GetComponent<Player>().KillPlayer();
     }
 }

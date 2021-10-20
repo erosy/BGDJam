@@ -17,12 +17,14 @@ public class E1_PlayerDetectedState : DetectingPlayerState
         base.LogicUpdate();
         if (performLongRangeAction)
         {
-            //enemy.idleState.SetFlipAfterIdle(false);
-            stateMachine.ChangeState(enemy.chargeState);
-        }
-        //else if (!isPlayerInMaxAgroRange)
-        //    stateMachine.ChangeState(enemy.lookForPlayerState);
             
+            //enemy.idleState.SetFlipAfterIdle(false);
+            //else
+                stateMachine.ChangeState(enemy.chargeState);
+        }
+        else if (!isPlayerInMaxAgroRange)
+            stateMachine.ChangeState(enemy.lookForPlayerState);
+
     }
 
 

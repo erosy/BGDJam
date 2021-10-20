@@ -14,8 +14,9 @@ public class E1_ChargeState : ChargeState
     {
         base.LogicUpdate();
 
-        if(!isDetectingLedge || isDetectingWall)
+        if (!isDetectingLedge || isDetectingWall)
         {
+            Debug.Log("Detecting Ledge = " + isDetectingLedge + " " + "Detecting Wall = " + isDetectingWall);
             stateMachine.ChangeState(enemy.lookForPlayerState);
         }
 
@@ -25,7 +26,9 @@ public class E1_ChargeState : ChargeState
             if (isPlayerInMinAgroRange)
                 stateMachine.ChangeState(enemy.playerDetectedState);
             else
+            {
                 stateMachine.ChangeState(enemy.lookForPlayerState);
+            }
         }
             
     }
